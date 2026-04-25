@@ -15,19 +15,19 @@
         
         .bg-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; }
 
-        #welcome-notif, #custom-prompt, #rules-modal, #error-modal {
+        #welcome-notif, #custom-prompt, #rules-modal, #error-modal, #path-modal {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
             width: 85%; max-width: 380px; z-index: 50000; padding: 2px; border-radius: 20px;
             background: linear-gradient(45deg, var(--main-red), var(--gold), var(--neon-blue));
             display: none; box-shadow: 0 0 25px rgba(255, 0, 0, 0.4);
         }
-        .prompt-content, .rules-content, .error-content { 
+        .prompt-content, .rules-content, .error-content, .path-content { 
             background-color: rgba(0, 0, 0, 0.9);
             background-blend-mode: darken;
             border-radius: 18px; padding: 25px; text-align: center; 
         }
         .prompt-content { background: url('300.jpg') center/cover no-repeat rgba(0, 0, 0, 0.85); }
-        .rules-content { background: url('1500.jpg') center/cover no-repeat rgba(0, 0, 0, 0.85); }
+        .rules-content  { background: url('1500.jpg') center/cover no-repeat rgba(0, 0, 0, 0.85); }
         
         .prompt-input {
             background: rgba(0, 0, 0, 0.7); border: 1.5px solid var(--neon-blue);
@@ -43,6 +43,7 @@
         .progress-bar { width: 0%; height: 100%; background: var(--main-red); box-shadow: 0 0 10px var(--main-red); transition: width 0.2s; }
         .loading-text { font-family: 'Creepster'; color: var(--main-red); font-size: 18px; }
 
+        /* ===== splash - poster 1212.jpg ===== */
         #splash-screen { display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; }
         #video-start { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
         .btn-enter-ru { position: relative; font-size: 55px; color: #fff; text-shadow: 0 0 20px var(--main-red); font-family: 'Creepster'; cursor: pointer; z-index: 10; margin-top: 35vh; background:none; border:none; }
@@ -75,12 +76,22 @@
             position: relative; height: 110px; border: 1px solid var(--orange-glow); 
             border-radius: 12px; overflow: hidden; display: flex; align-items: center; justify-content: center; cursor: pointer;
         }
+        /* بطاقة اختيار المسار - عريضة */
+        .option-card-wide {
+            grid-column: span 2;
+            position: relative; height: 110px;
+            border: 2px solid var(--gold); border-radius: 12px;
+            overflow: hidden; display: flex; align-items: center; justify-content: center; cursor: pointer;
+            background: linear-gradient(135deg, rgba(255,215,0,0.07), rgba(0,243,255,0.07));
+            box-shadow: 0 0 20px rgba(255,215,0,0.2);
+        }
         .card-img-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; filter: brightness(0.5); }
-        .card-text { position: relative; z-index: 2; color: var(--neon-blue); font-weight: bold; text-shadow: 0 0 8px #000; font-size: 13px; }
+        .card-text      { position: relative; z-index: 2; color: var(--neon-blue); font-weight: bold; text-shadow: 0 0 8px #000; font-size: 13px; text-align: center; padding: 5px; }
+        .card-text-wide { position: relative; z-index: 2; color: var(--gold); font-weight: bold; font-size: 17px; text-align: center; letter-spacing: 1px; text-shadow: 0 0 14px rgba(255,215,0,0.7); }
 
         .p-btn { padding: 10px 20px; border-radius: 50px; cursor: pointer; font-weight: bold; font-family: 'Cairo'; margin-top: 10px; }
         .p-btn.confirm { background: var(--main-red); color: white; border: none; }
-        .p-btn.cancel { background: transparent; color: var(--gold); border: 1px solid var(--gold); }
+        .p-btn.cancel  { background: transparent; color: var(--gold); border: 1px solid var(--gold); }
         
         .rules-trigger {
             margin: 20px auto; padding: 15px; width: 70%; text-align: center;
@@ -88,39 +99,88 @@
             font-weight: bold; cursor: pointer; background: rgba(0,0,0,0.5);
         }
 
+        /* ===== BOSS NOTES ROOM ===== */
         #boss-notes-room { background: url('5000.jpg') center/cover no-repeat; z-index: 40000; flex-direction: column; }
-        .chat-container { flex: 1; padding: 20px; display: flex; flex-direction: column; justify-content: flex-start; overflow-y: auto; width: 100%; box-sizing: border-box; padding-top: 80px; }
-        .chat-bubble-wrapper { display: flex; align-items: flex-end; margin-bottom: 10px; flex-direction: row-reverse; }
-        .chat-avatar { width: 40px; height: 40px; border-radius: 50%; background: url('15000.jpg') center/cover; margin-right: 10px; border: 1px solid var(--gold); }
-        .chat-bubble-content { max-width: 75%; display: flex; flex-direction: column; align-items: flex-end; }
-        .sender-name { font-size: 10px; color: #aaa; margin-bottom: 4px; font-family: sans-serif; }
-        .chat-bubble { background: #333; color: #fff; padding: 12px; border-radius: 18px 18px 0px 18px; font-size: 14px; line-height: 1.5; text-align: right; }
-        .chat-footer { background: rgba(0,0,0,0.8); padding: 15px; text-align: center; font-size: 12px; color: var(--main-red); border-top: 1px solid #222; }
 
+        /* شريط علوي */
+        .boss-room-header {
+            position: sticky; top: 0; z-index: 200;
+            background: rgba(0,0,0,0.93);
+            border-bottom: 2px solid var(--gold);
+            display: flex; align-items: center; gap: 10px;
+            padding: 10px 14px; flex-shrink: 0;
+        }
+        .boss-header-back  { font-size: 28px; color: var(--main-red); cursor: pointer; line-height: 1; flex-shrink: 0; }
+        .boss-header-avatar {
+            width: 44px; height: 44px; border-radius: 50%;
+            background: url('300500.jpg') center/cover no-repeat;
+            border: 2px solid var(--gold); flex-shrink: 0;
+        }
+        .boss-header-info  { display: flex; flex-direction: column; align-items: flex-start; }
+        .boss-header-name  { font-family: 'Creepster'; color: var(--gold); font-size: 17px; letter-spacing: 1px; line-height: 1.2; }
+        .boss-header-status{ font-size: 10px; color: var(--neon-blue); }
+
+        /* منطقة المحادثة */
+        .chat-container {
+            flex: 1; padding: 15px 15px 20px; overflow-y: auto;
+            display: flex; flex-direction: column; gap: 14px;
+            width: 100%; box-sizing: border-box;
+        }
+
+        .chat-bubble-wrapper        { display: flex; align-items: flex-end; gap: 8px; }
+        .chat-bubble-wrapper.received { flex-direction: row; }
+        .chat-bubble-wrapper.sent     { flex-direction: row-reverse; }
+
+        .chat-avatar {
+            width: 36px; height: 36px; border-radius: 50%;
+            background: url('300500.jpg') center/cover no-repeat;
+            border: 1.5px solid var(--gold); flex-shrink: 0;
+        }
+        .chat-bubble-content { max-width: 78%; display: flex; flex-direction: column; }
+        .chat-bubble-wrapper.received .chat-bubble-content { align-items: flex-start; }
+        .chat-bubble-wrapper.sent     .chat-bubble-content { align-items: flex-end; }
+
+        .sender-name { font-size: 10px; color: #aaa; margin-bottom: 3px; }
+        .msg-time    { font-size: 9px;  color: #555; margin-top: 3px; }
+
+        .chat-bubble { padding: 11px 14px; font-size: 14px; line-height: 1.6; word-break: break-word; }
+        .chat-bubble-wrapper.received .chat-bubble {
+            background: linear-gradient(135deg,#1a1a2e,#16213e);
+            border: 1px solid rgba(0,243,255,0.2);
+            border-radius: 18px 18px 18px 0; text-align: right; color: #fff;
+        }
+        .chat-bubble-wrapper.sent .chat-bubble {
+            background: linear-gradient(135deg,#1a0000,#2d0000);
+            border: 1px solid rgba(255,0,0,0.3);
+            border-radius: 18px 18px 0 18px; text-align: right; color: #fff;
+        }
+
+        .chat-footer { background: rgba(0,0,0,0.85); padding: 14px; text-align: center; font-size: 12px; color: var(--main-red); border-top: 1px solid #222; flex-shrink: 0; }
+
+        /* ===== SUB ROOM ===== */
         #sub-room { background-size: cover; background-position: center; display: none; }
         .room-data-box {
-            width: 85%; max-width: 400px; background: rgba(0, 0, 0, 0.75);
+            width: 85%; max-width: 400px; background: rgba(0,0,0,0.75);
             border: 1px solid var(--neon-blue); border-radius: 15px; padding: 20px;
             backdrop-filter: blur(10px); box-shadow: 0 0 20px var(--neon-blue);
             text-align: right; overflow-y: auto; max-height: 70vh;
         }
-        .room-title { font-family: 'Creepster'; color: var(--main-red); font-size: 28px; border-bottom: 1px solid var(--main-red); margin-bottom: 15px; text-align: center; }
+        .room-title        { font-family: 'Creepster'; color: var(--main-red); font-size: 26px; border-bottom: 1px solid var(--main-red); margin-bottom: 15px; text-align: center; }
         .room-text-content { color: #eee; font-size: 14px; line-height: 1.8; }
 
         .app-file-list { margin-top: 15px; text-align: center; }
-        .app-item { background: rgba(255, 255, 255, 0.1); margin: 5px 0; padding: 10px; border-radius: 8px; border: 1px dashed var(--neon-blue); cursor: pointer; color: var(--gold); font-size: 12px; }
+        .app-item { background: rgba(255,255,255,0.1); margin: 5px 0; padding: 10px; border-radius: 8px; border: 1px dashed var(--neon-blue); cursor: pointer; color: var(--gold); font-size: 12px; }
 
         .back-arrow { position: fixed; top: 25px; right: 25px; color: var(--main-red); font-size: 35px; cursor: pointer; z-index: 10000; display: none; }
         .typewriter-text { display: inline; }
 
-        /* نبض الشاشة عند التقطيع */
         @keyframes glitchEffect {
-            0% { transform: translate(0); filter: hue-rotate(0deg); opacity: 1; }
-            20% { transform: translate(-5px, 5px); filter: hue-rotate(90deg); opacity: 0.8; }
-            40% { transform: translate(5px, -5px); opacity: 1; }
-            60% { transform: translate(-10px, 0); filter: brightness(2); }
-            80% { transform: translate(10px, 5px); opacity: 0.5; }
-            100% { transform: translate(0); filter: hue-rotate(0deg); opacity: 1; }
+            0%   { transform: translate(0);       filter: hue-rotate(0deg);  opacity: 1; }
+            20%  { transform: translate(-5px,5px); filter: hue-rotate(90deg); opacity: 0.8; }
+            40%  { transform: translate(5px,-5px);                             opacity: 1; }
+            60%  { transform: translate(-10px,0); filter: brightness(2); }
+            80%  { transform: translate(10px,5px);                             opacity: 0.5; }
+            100% { transform: translate(0);       filter: hue-rotate(0deg);  opacity: 1; }
         }
         .glitch-active { animation: glitchEffect 0.2s infinite; }
     </style>
@@ -129,146 +189,231 @@
 
     <div class="back-arrow" id="backBtn" onclick="goBack()">➔</div>
 
+    <!-- ===== BANNED ===== -->
     <div id="banned-screen">
-        <h1 style="font-size: 40px;">ACCESS PERMANENTLY DENIED</h1>
+        <h1 style="font-size:40px;">ACCESS PERMANENTLY DENIED</h1>
         <p id="ban-msg-final"></p>
         <div id="boss-recovery" style="margin-top:20px;">
-            <p style="color:var(--gold); font-size:12px; font-family:'Cairo';">هل أنت الزعيم؟</p>
+            <p style="color:var(--gold);font-size:12px;font-family:'Cairo';">هل أنت الزعيم؟</p>
             <input type="password" id="boss-code" class="prompt-input" style="width:60%;" placeholder="رمز الهوية">
-            <button class="p-btn cancel" onclick="recoverAsBoss()" style="font-size:12px; padding:5px 15px;">تأكيد</button>
-            <div id="boss-loading" style="display:none; margin-top:20px;">
+            <button class="p-btn cancel" onclick="recoverAsBoss()" style="font-size:12px;padding:5px 15px;">تأكيد</button>
+            <div id="boss-loading" style="display:none;margin-top:20px;">
                 <div class="loading-text" id="boss-status">OVERRIDING...</div>
                 <center><div class="progress-bar-container"><div id="p-bar-boss" class="progress-bar"></div></div></center>
             </div>
         </div>
     </div>
 
+    <!-- ===== WELCOME ===== -->
     <div id="welcome-notif">
         <div class="prompt-content">
-            <h3 style="color: var(--gold);">نظام область 53</h3>
-            <div id="welcome-text" class="typewriter-text" style="font-size: 14px; line-height: 1.6; color: #eee; margin-bottom: 10px;"></div>
+            <h3 style="color:var(--gold);">نظام область 53</h3>
+            <div id="welcome-text" class="typewriter-text" style="font-size:14px;line-height:1.6;color:#eee;margin-bottom:10px;"></div>
             <br>
             <button class="p-btn confirm" id="welcome-btn" style="display:none;" onclick="closeWelcome()">تم الفهم</button>
         </div>
     </div>
 
+    <!-- ===== ERROR ===== -->
     <div id="error-modal">
         <div class="error-content">
-            <h3 style="color: var(--main-red);">خطأ في النظام</h3>
-            <div id="error-text" style="font-size: 14px; color: #eee; margin-bottom: 10px;"></div>
-            <div id="timer-display" style="font-size: 24px; color: var(--gold); font-weight: bold; margin-top: 10px;"></div>
+            <h3 style="color:var(--main-red);">خطأ في النظام</h3>
+            <div id="error-text" style="font-size:14px;color:#eee;margin-bottom:10px;"></div>
+            <div id="timer-display" style="font-size:24px;color:var(--gold);font-weight:bold;margin-top:10px;"></div>
         </div>
     </div>
 
+    <!-- ===== PATH MODAL - بدون رمز تحقق ===== -->
+    <div id="path-modal">
+        <div class="path-content">
+            <h3 style="color:var(--gold);font-family:'Creepster';font-size:22px;">اختيار المسار وتخصص</h3>
+            <div id="path-text" style="font-size:14px;color:#eee;margin:15px 0;line-height:1.8;text-align:center;"></div>
+            <button class="p-btn cancel" id="path-close-btn" style="display:none;" onclick="document.getElementById('path-modal').style.display='none'">إغلاق</button>
+        </div>
+    </div>
+
+    <!-- ===== ROOM PROMPT ===== -->
     <div id="custom-prompt">
         <div class="prompt-content">
-            <h3 id="prompt-title" style="color: var(--gold);">تشفير الغرفة</h3>
+            <h3 id="prompt-title" style="color:var(--gold);">تشفير الغرفة</h3>
             <input type="password" id="room-input" class="prompt-input" placeholder="الرمز السري">
-            <div style="display:flex; gap:10px; justify-content:center;">
+            <div style="display:flex;gap:10px;justify-content:center;">
                 <button class="p-btn confirm" onclick="validateRoomKey()">دخول</button>
-                <button class="p-btn cancel" onclick="hidePrompt()">إلغاء</button>
+                <button class="p-btn cancel"  onclick="hidePrompt()">إلغاء</button>
             </div>
         </div>
     </div>
 
+    <!-- ===== RULES ===== -->
     <div id="rules-modal">
         <div class="rules-content">
-            <h3 style="color: var(--gold);">معايير وقوانين 53</h3>
-            <div id="rules-text" style="color: #eee; font-size: 13px; text-align: right; margin: 15px 0; line-height: 1.8;"></div>
+            <h3 style="color:var(--gold);">معايير وقوانين 53</h3>
+            <div id="rules-text" style="color:#eee;font-size:13px;text-align:right;margin:15px 0;line-height:1.8;"></div>
             <button class="p-btn cancel" id="rules-btn" style="display:none;" onclick="document.getElementById('rules-modal').style.display='none'">إغلاق</button>
         </div>
     </div>
 
+    <!-- ===== SPLASH - poster="1212.jpg" ===== -->
     <div id="splash-screen">
-        <video id="video-start" poster="1.jpg" playsinline><source src="start.mp4" type="video/mp4"></video>
+        <video id="video-start" poster="1212.jpg" playsinline><source src="start.mp4" type="video/mp4"></video>
         <button class="btn-enter-ru" id="start-btn" onclick="runSystem()">ВХОД</button>
-        <div id="loading-area-1" style="display:none; position:absolute; bottom:100px; text-align:center; width:100%;">
+        <div id="loading-area-1" style="display:none;position:absolute;bottom:100px;text-align:center;width:100%;">
             <div class="loading-text">Загрузка...</div>
             <center><div class="progress-bar-container"><div id="p-bar-1" class="progress-bar"></div></div></center>
         </div>
     </div>
 
+    <!-- ===== LOGIN ===== -->
     <div id="login-screen">
         <div class="login-box">
-            <h2 style="color:var(--main-red); text-align:center; font-family:'Creepster';">область 53</h2>
+            <h2 style="color:var(--main-red);text-align:center;font-family:'Creepster';">область 53</h2>
             <input type="text" placeholder="الاسم المستعار">
             <input type="password" id="u-pass" placeholder="كلمة المرور">
-            <button onclick="verify()" style="width:100%; background:none; border:1px solid var(--main-red); color:var(--main-red); padding:10px; font-weight:bold; cursor:pointer;">تأكيد الهوية</button>
+            <button onclick="verify()" style="width:100%;background:none;border:1px solid var(--main-red);color:var(--main-red);padding:10px;font-weight:bold;cursor:pointer;">تأكيد الهوية</button>
         </div>
     </div>
 
+    <!-- ===== RECEPTION VIDEO ===== -->
     <div id="reception-video-page">
-        <video id="video-main" style="width:100%; height:100%; object-fit:cover;"><source src="main.mp4" type="video/mp4"></video>
-        <div style="position:absolute; bottom:50px; width:100%; text-align:center;">
-            <div id="digit-load" style="color:var(--main-red); font-family:'Creepster'; font-size:24px;">0%</div>
+        <video id="video-main" style="width:100%;height:100%;object-fit:cover;"><source src="main.mp4" type="video/mp4"></video>
+        <div style="position:absolute;bottom:50px;width:100%;text-align:center;">
+            <div id="digit-load" style="color:var(--main-red);font-family:'Creepster';font-size:24px;">0%</div>
             <center><div class="progress-bar-container" style="width:80%"><div id="p-bar-2" class="progress-bar"></div></div></center>
         </div>
     </div>
 
+    <!-- ===== MAIN DASHBOARD ===== -->
     <div id="main-dashboard">
-        <video class="bg-video" autoplay loop muted style="opacity: 0.4; filter: brightness(0.4);"><source src="options_bg.mp4" type="video/mp4"></video>
+        <video class="bg-video" autoplay loop muted style="opacity:0.4;filter:brightness(0.4);"><source src="options_bg.mp4" type="video/mp4"></video>
         <div class="boss-notes-trigger" onclick="openBossNotes()">
             <div class="msg-icon">💬</div>
             <span>ملاحظة</span>
         </div>
         <div class="dashboard-scroll" id="dashScroll">
-            <div id="note-board"><div style="color:var(--gold); font-size: 14px;">نظام область 53 نشط الآن.</div></div>
+            <div id="note-board"><div style="color:var(--gold);font-size:14px;">نظام область 53 نشط الآن.</div></div>
             <div class="options-grid" id="grid"></div>
             <div class="rules-trigger" onclick="showRules()">معايير وقوانين 53</div>
         </div>
     </div>
 
+    <!-- ===== BOSS NOTES ROOM - شريط علوي + محادثات منظمة ===== -->
     <div id="boss-notes-room">
-        <div onclick="closeBossNotes()" style="position:absolute; top:25px; left:25px; font-size:35px; color:var(--main-red); cursor:pointer; z-index:100;">➔</div>
+
+        <!-- شريط علوي -->
+        <div class="boss-room-header">
+            <div class="boss-header-back" onclick="closeBossNotes()">➔</div>
+            <div class="boss-header-avatar"></div>
+            <div class="boss-header-info">
+                <div class="boss-header-name">область 𝟓𝟑 &nbsp;›1‹</div>
+                <div class="boss-header-status">● نشط الآن</div>
+            </div>
+        </div>
+
+        <!-- محادثات منظمة -->
         <div class="chat-container" id="chat-box">
-            <div class="chat-bubble-wrapper">
+
+            <!-- رسالة 1 -->
+            <div class="chat-bubble-wrapper received">
                 <div class="chat-avatar"></div>
                 <div class="chat-bubble-content">
                     <div class="sender-name">X【図】 LITHく交ᵎ襲</div>
                     <div id="boss-chat-text" class="chat-bubble"></div>
+                    <div class="msg-time">12:00</div>
                 </div>
             </div>
-            <div class="chat-bubble-wrapper" style="margin-right: 50px;">
+
+            <!-- رسالة 2 -->
+            <div class="chat-bubble-wrapper received">
+                <div class="chat-avatar"></div>
                 <div class="chat-bubble-content">
+                    <div class="sender-name">X【図】 LITHく交ᵎ襲</div>
                     <div id="boss-chat-text-2" class="chat-bubble"></div>
+                    <div class="msg-time">12:05</div>
                 </div>
             </div>
+
         </div>
         <div class="chat-footer">المشرفون فقط من يمكنهم التحدث هنا</div>
     </div>
 
-    <div id="sub-room" style="flex-direction:column; justify-content:center; align-items:center; z-index:30000;">
-        <div onclick="exitRoom()" style="position:absolute; top:25px; left:25px; font-size:35px; color:var(--main-red); cursor:pointer;">➔</div>
+    <!-- ===== SUB ROOM ===== -->
+    <div id="sub-room" style="flex-direction:column;justify-content:center;align-items:center;z-index:30000;">
+        <div onclick="exitRoom()" style="position:absolute;top:25px;left:25px;font-size:35px;color:var(--main-red);cursor:pointer;">➔</div>
         <div class="room-data-box">
             <div class="room-title" id="room-display-title">ROOM ID</div>
             <div class="room-text-content" id="room-display-text"></div>
+            <!-- ===== ملفات ssh1.apk → ssh10.apk في الغرفة 1 (Auto Бот) ===== -->
             <div id="app-content-area" class="app-file-list" style="display:none;">
-                <div class="app-item">Application_V1.apk [تحميل]</div>
-                <div style="color:#666; font-size:10px; margin-top:10px;">بانتظار مزامنة بقية الملفات (1/100)...</div>
+                <div class="app-item">📦 ssh1.apk &nbsp;[تحميل]</div>
+                <div class="app-item">📦 ssh2.apk &nbsp;[تحميل]</div>
+                <div class="app-item">📦 ssh3.apk &nbsp;[تحميل]</div>
+                <div class="app-item">📦 ssh4.apk &nbsp;[تحميل]</div>
+                <div class="app-item">📦 ssh5.apk &nbsp;[تحميل]</div>
+                <div class="app-item">📦 ssh6.apk &nbsp;[تحميل]</div>
+                <div class="app-item">📦 ssh7.apk &nbsp;[تحميل]</div>
+                <div class="app-item">📦 ssh8.apk &nbsp;[تحميل]</div>
+                <div class="app-item">📦 ssh9.apk &nbsp;[تحميل]</div>
+                <div class="app-item">📦 ssh10.apk [تحميل]</div>
+                <div style="color:#666;font-size:10px;margin-top:10px;">بانتظار مزامنة بقية الملفات (10/100)...</div>
             </div>
         </div>
     </div>
 
     <script>
-        const vStart = document.getElementById('video-start');
-        const vMain = document.getElementById('video-main');
-        const pBar1 = document.getElementById('p-bar-1');
-        const pBar2 = document.getElementById('p-bar-2');
+        const vStart    = document.getElementById('video-start');
+        const vMain     = document.getElementById('video-main');
+        const pBar1     = document.getElementById('p-bar-1');
+        const pBar2     = document.getElementById('p-bar-2');
         const digitLoad = document.getElementById('digit-load');
-        
+
         let attempts = parseInt(localStorage.getItem('53_attempts')) || 0;
-        const roomKeys = ["1hiffh", "2vfxjt", "htdnu", "ufcjund u", "ufvjudde", "pppibbfxw", "llkonuvfxx", "ufdcbjg", "hfcvjih", "jgddvnoumnvvc", "bvcvh", "mmnbvcc,", "lklkmkmkh", "lkjhfdsa", "xcFzvfT", "5VGdzhgH", "gdhhdvjgvjgd", "bdfjckhfbigvjf", "ncvnvfg", "GdsbHx", "Jdhifvj648vxx", "c jvxc3000gx", "nc jfngc1", "jh c VBN hfx", "vc gi kj c vb nd do ofc", "bcd bc hb nh if", "jg djgn", "vhffg", "vgjhf"];
+        let selectedRoomIndex = 0;
+
+        const roomKeys = [
+            "1hiffh",               // 0  Auto Бот
+            "2vfxjt",               // 1  غرفة الكودات
+            "htdnu",                // 2  غرفة من الأقوى
+            "ufcjund u",            // 3  آخر عمليات تم القيام بها
+            "ufvjudde",             // 4  انجازات المنطقة 53
+            "pppibbfxw",            // 5  أعضاء المنطقة 53
+            "llkonuvfxx",           // 6  آخر ما تم برمجته
+            "ufdcbjg",              // 7  آخر الأخبار
+            "hfcvjih",              // 8  المهام الموكلة
+            "jgddvnoumnvvc",        // 9  غرفة الاستخبارات
+            "bvcvh","mmnbvcc,","lklkmkmkh","lkjhfdsa","xcFzvfT",
+            "5VGdzhgH","gdhhdvjgvjgd","bdfjckhfbigvjf","ncvnvfg","GdsbHx",
+            "Jdhifvj648vxx","c jvxc3000gx","nc jfngc1","jh c VBN hfx",
+            "vc gi kj c vb nd do ofc","bcd bc hb nh if","jg djgn","vhffg","vgjhf"
+        ];
+
+        // ===== أسماء الغرف =====
+        const roomNames = [
+            "Auto Бот",                      // 0
+            "غرفة الكودات",                  // 1
+            "غرفة من الأقوى",                // 2
+            "آخر عمليات تم القيام بها",      // 3
+            "انجازات المنطقة 53",            // 4
+            "أعضاء المنطقة 53",              // 5
+            "آخر ما تم برمجته",              // 6
+            "آخر الأخبار",                   // 7
+            "المهام الموكلة",                // 8
+            "غرفة الاستخبارات",              // 9
+            "غرفة رقم 11","غرفة رقم 12","غرفة رقم 13","غرفة رقم 14","غرفة رقم 15",
+            "غرفة رقم 16","غرفة رقم 17","غرفة رقم 18","غرفة رقم 19","غرفة رقم 20",
+            "غرفة رقم 21","غرفة رقم 22","غرفة رقم 23","غرفة رقم 24","غرفة رقم 25",
+            "غرفة رقم 26","غرفة رقم 27","غرفة رقم 28","غرفة رقم 29"
+        ];
 
         const tickAudio = new Audio('https://www.soundjay.com/buttons/beep-29.mp3');
         tickAudio.volume = 0.2;
 
         function typeWriter(elementId, text, speed, callback) {
             let i = 0;
-            const element = document.getElementById(elementId);
-            element.innerHTML = "";
+            const el = document.getElementById(elementId);
+            el.innerHTML = "";
             function type() {
                 if (i < text.length) {
-                    element.innerHTML += text.charAt(i) === '\n' ? '<br>' : text.charAt(i);
+                    el.innerHTML += text.charAt(i) === '\n' ? '<br>' : text.charAt(i);
                     i++;
                     tickAudio.cloneNode(true).play().catch(()=>{});
                     setTimeout(type, speed);
@@ -279,44 +424,32 @@
 
         function checkBanStatus() {
             if (localStorage.getItem('53_permaban') === 'true') {
-                document.getElementById('splash-screen').style.display='none';
+                document.getElementById('splash-screen').style.display = 'none';
                 document.getElementById('banned-screen').style.display = "flex";
                 typeWriter('ban-msg-final', "تم نفي متصفحك من المنطقة 53.. الوداع", 100);
             }
         }
 
-        // فرصة الزعيم
         function recoverAsBoss() {
-            if(document.getElementById('boss-code').value === "M_Xcv_099099") {
+            if (document.getElementById('boss-code').value === "M_Xcv_099099") {
                 document.getElementById('boss-loading').style.display = 'block';
                 let progress = 0;
-                let bar = document.getElementById('p-bar-boss');
-                let status = document.getElementById('boss-status');
-                
-                let interval = setInterval(() => {
-                    progress += 1;
+                const bar    = document.getElementById('p-bar-boss');
+                const status = document.getElementById('boss-status');
+                const interval = setInterval(() => {
+                    progress++;
                     bar.style.width = progress + "%";
-                    
-                    // محاكاة تقطيع النظام
-                    if(progress === 30 || progress === 70) {
-                        document.body.classList.add('glitch-active');
-                        status.innerText = "SYSTEM ERROR...";
-                    } else if (progress === 40 || progress === 85) {
-                        document.body.classList.remove('glitch-active');
-                        status.innerText = "BYPASSING SECURITY...";
-                    }
-
-                    if(progress >= 100) {
+                    if (progress === 30 || progress === 70) { document.body.classList.add('glitch-active'); status.innerText = "SYSTEM ERROR..."; }
+                    else if (progress === 40 || progress === 85) { document.body.classList.remove('glitch-active'); status.innerText = "BYPASSING SECURITY..."; }
+                    if (progress >= 100) {
                         clearInterval(interval);
                         localStorage.removeItem('53_permaban');
                         localStorage.removeItem('53_attempts');
                         document.body.classList.remove('glitch-active');
-                        location.reload(); // إعادة ترحيب الزعيم
+                        location.reload();
                     }
-                }, 110); // عشر ثواني وشوي
-            } else {
-                alert("ACCESS DENIED");
-            }
+                }, 110);
+            } else { alert("ACCESS DENIED"); }
         }
 
         function runSystem() {
@@ -324,11 +457,11 @@
             document.getElementById('loading-area-1').style.display = 'block';
             vStart.play();
             vStart.ontimeupdate = () => { pBar1.style.width = (vStart.currentTime / vStart.duration) * 100 + "%"; };
-            vStart.onended = () => { switchPage('splash-screen', 'login-screen'); document.getElementById('backBtn').style.display='block'; };
+            vStart.onended = () => { switchPage('splash-screen', 'login-screen'); document.getElementById('backBtn').style.display = 'block'; };
         }
 
         function verify() {
-            if(document.getElementById('u-pass').value.trim() === "область 53") {
+            if (document.getElementById('u-pass').value.trim() === "область 53") {
                 switchPage('login-screen', 'reception-video-page');
                 vMain.play();
             } else { handleLoginError(); }
@@ -338,22 +471,18 @@
             attempts++;
             localStorage.setItem('53_attempts', attempts);
             let waitTime = 0;
-            if (attempts === 1) waitTime = 30;
+            if      (attempts === 1) waitTime = 30;
             else if (attempts === 2) waitTime = 60;
             else if (attempts === 3) waitTime = 3600;
             else { localStorage.setItem('53_permaban', 'true'); checkBanStatus(); return; }
 
             document.getElementById('error-modal').style.display = 'block';
             typeWriter('error-text', "كلمة السر خطأ الرجاء محاولة في وقت آخر", 50);
-            
             let remaining = waitTime;
             const timer = setInterval(() => {
                 document.getElementById('timer-display').innerText = remaining + "s";
                 remaining--;
-                if (remaining < 0) {
-                    clearInterval(timer);
-                    document.getElementById('error-modal').style.display = 'none';
-                }
+                if (remaining < 0) { clearInterval(timer); document.getElementById('error-modal').style.display = 'none'; }
             }, 1000);
         }
 
@@ -386,54 +515,76 @@
         function generateOptions() {
             const grid = document.getElementById('grid');
             grid.innerHTML = "";
-            for(let i=0; i < roomKeys.length; i++) {
+
+            // 29 غرفة عادية
+            for (let i = 0; i < roomKeys.length; i++) {
                 const btn = document.createElement('div');
                 btn.className = 'option-card';
-                let roomName = (i === 0) ? "Auto Бот" : `غرفة رقم ${i+1}`;
-                btn.innerHTML = `<img class="card-img-bg" src="${i+1}.jpg" onerror="this.src='1000007388.jpg'"><div class="card-text">${roomName}</div>`;
+                btn.innerHTML = `<img class="card-img-bg" src="${i+1}.jpg" onerror="this.src='1000007388.jpg'"><div class="card-text">${roomNames[i]}</div>`;
                 btn.onclick = () => showPrompt(i);
                 grid.appendChild(btn);
             }
+
+            // ===== الخيار 30 - اختيار المسار (عريض - بدون رمز) =====
+            const wide = document.createElement('div');
+            wide.className = 'option-card-wide';
+            wide.innerHTML = `<div class="card-text-wide">⚡ اختيار المسار وتخصص ⚡</div>`;
+            wide.onclick = openPathModal;
+            grid.appendChild(wide);
+        }
+
+        function openPathModal() {
+            document.getElementById('path-modal').style.display = 'block';
+            document.getElementById('path-close-btn').style.display = 'none';
+            typeWriter('path-text', "لا يوجد أي دلائل منشورة الآن.", 50, () => {
+                document.getElementById('path-close-btn').style.display = 'inline-block';
+            });
         }
 
         function validateRoomKey() {
-            if(document.getElementById('room-input').value === roomKeys[selectedRoomIndex]) {
+            if (document.getElementById('room-input').value === roomKeys[selectedRoomIndex]) {
                 hidePrompt();
                 const roomPage = document.getElementById('sub-room');
                 roomPage.style.backgroundImage = `url('${selectedRoomIndex + 31}.jpg')`;
-                let title = (selectedRoomIndex === 0) ? "Auto Бот - Files" : `DATA ROOM ${selectedRoomIndex + 1}`;
+                const title = (selectedRoomIndex === 0) ? "Auto Бот - Files" : roomNames[selectedRoomIndex].toUpperCase();
                 document.getElementById('room-display-title').innerText = title;
                 switchPage('main-dashboard', 'sub-room');
                 const extraText = (selectedRoomIndex === 0) ? "\n* جميع تطبيقاتنا بين يديك احترس ولا تشاركها لأحد." : "";
-                typeWriter('room-display-text', `* تم فك التشفير بنجاح.\n* العضو المسؤول: نظام область 53.\n* التاريخ: ${new Date().toLocaleDateString('ar-EG')}${extraText}`, 30, () => {
-                    if(selectedRoomIndex === 0) document.getElementById('app-content-area').style.display = 'block';
-                });
+                typeWriter('room-display-text',
+                    `* تم فك التشفير بنجاح.\n* العضو المسؤول: نظام область 53.\n* التاريخ: ${new Date().toLocaleDateString('ar-EG')}${extraText}`,
+                    30,
+                    () => { if (selectedRoomIndex === 0) document.getElementById('app-content-area').style.display = 'block'; }
+                );
             } else { handleLoginError(); }
         }
 
         function openBossNotes() {
             switchPage('main-dashboard', 'boss-notes-room');
-            typeWriter('boss-chat-text', "مرحباً بكم جميعاً في موقع منظمة المنطقة 53، أتمنى عدم مشاركة الرموز وانتظار كل تحديث، سيتم إعلامكم عن كل جديد.", 40, () => {
-                typeWriter('boss-chat-text-2', "مرحباً تم إضافة تحديث قسم 1 أيتو بوت ماب.", 40);
-            });
+            typeWriter('boss-chat-text',
+                "مرحباً بكم جميعاً في موقع منظمة المنطقة 53، أتمنى عدم مشاركة الرموز وانتظار كل تحديث، سيتم إعلامكم عن كل جديد.",
+                40,
+                () => { typeWriter('boss-chat-text-2', "مرحباً تم إضافة تحديث قسم 1 أيتو بوت ماب.", 40); }
+            );
         }
 
         function showPrompt(index) {
             selectedRoomIndex = index;
-            let title = (index === 0) ? "تشفير Auto Бот" : `تشفير غرفة رقم ${index + 1}`;
+            const title = (index === 0) ? "تشفير Auto Бот" : `تشفير ${roomNames[index]}`;
             document.getElementById('prompt-title').innerText = title;
             document.getElementById('room-input').value = "";
             document.getElementById('custom-prompt').style.display = 'block';
         }
-        function hidePrompt() { document.getElementById('custom-prompt').style.display = 'none'; }
+
+        function hidePrompt()     { document.getElementById('custom-prompt').style.display = 'none'; }
         function closeBossNotes() { switchPage('boss-notes-room', 'main-dashboard'); }
-        function exitRoom() { 
+        function exitRoom() {
             document.getElementById('app-content-area').style.display = 'none';
-            switchPage('sub-room', 'main-dashboard'); 
+            switchPage('sub-room', 'main-dashboard');
         }
         function goBack() { location.reload(); }
+
         vMain.ontimeupdate = () => {
-            let percentage = Math.floor((vMain.currentTime / vMain.duration) * 100);
+            const percentage = Math.floor((vMain.currentTime / vMain.duration) * 100);
             pBar2.style.width = percentage + "%";
             digitLoad.innerText = percentage + "%";
         };
