@@ -5,62 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>область 53 - Cyber System</title>
     <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-    
     <style>
         :root { --main-red: #ff0000; --gold: #ffd700; --neon-blue: #00f3ff; --orange-glow: #ff8c00; }
         body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background-color: #000; font-family: 'Cairo', sans-serif; color: white; }
-
         .fade-transition { animation: fadeBlurEffect 1s ease-in-out forwards; }
         @keyframes fadeBlurEffect { 0% { opacity: 0; filter: blur(15px); } 100% { opacity: 1; filter: blur(0); } }
-        
         .bg-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; }
-
         #welcome-notif, #custom-prompt, #rules-modal, #error-modal, #path-modal {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
             width: 85%; max-width: 380px; z-index: 50000; padding: 2px; border-radius: 20px;
             background: linear-gradient(45deg, var(--main-red), var(--gold), var(--neon-blue));
             display: none; box-shadow: 0 0 25px rgba(255, 0, 0, 0.4);
         }
-        .prompt-content, .rules-content, .error-content, .path-content { 
-            background-color: rgba(0, 0, 0, 0.9);
-            background-blend-mode: darken;
-            border-radius: 18px; padding: 25px; text-align: center; 
+        .prompt-content, .rules-content, .error-content, .path-content {
+            background-color: rgba(0, 0, 0, 0.9); background-blend-mode: darken;
+            border-radius: 18px; padding: 25px; text-align: center;
         }
         .prompt-content { background: url('300.jpg') center/cover no-repeat rgba(0, 0, 0, 0.85); }
         .rules-content  { background: url('1500.jpg') center/cover no-repeat rgba(0, 0, 0, 0.85); }
-        
         .prompt-input {
             background: rgba(0, 0, 0, 0.7); border: 1.5px solid var(--neon-blue);
             color: #fff; padding: 12px; width: 90%; text-align: center;
             border-radius: 10px; margin: 15px 0; font-family: 'Cairo';
         }
-
         #splash-screen, #login-screen, #reception-video-page, #main-dashboard, #sub-room, #boss-notes-room, #banned-screen { position: fixed; inset: 0; display: none; }
-        
         #banned-screen { background: #000; z-index: 1000000; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: var(--main-red); font-family: 'Creepster'; }
-
         .progress-bar-container { width: 200px; height: 2px; background: rgba(255, 0, 0, 0.2); margin-top: 10px; }
         .progress-bar { width: 0%; height: 100%; background: var(--main-red); box-shadow: 0 0 10px var(--main-red); transition: width 0.2s; }
         .loading-text { font-family: 'Creepster'; color: var(--main-red); font-size: 18px; }
-
-        /* ===== splash - poster 1212.jpg ===== */
         #splash-screen { display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; }
         #video-start { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
         .btn-enter-ru { position: relative; font-size: 55px; color: #fff; text-shadow: 0 0 20px var(--main-red); font-family: 'Creepster'; cursor: pointer; z-index: 10; margin-top: 35vh; background:none; border:none; }
-
         #login-screen { z-index: 8888; background: #000; flex-direction: column; justify-content: center; align-items: center; }
         .login-box { background: rgba(0, 0, 0, 0.93); padding: 35px; border: 1px solid var(--main-red); width: 80%; max-width: 320px; }
         input { background: #000; border: 1px solid #444; color: var(--main-red); padding: 14px; text-align: center; width: 100%; box-sizing: border-box; margin-bottom: 10px; }
-
         #main-dashboard { z-index: 7777; background: #000; flex-direction: column; }
         .dashboard-scroll { height: 100vh; overflow-y: auto; scroll-behavior: smooth; position: relative; z-index: 10; }
-        
         #note-board {
             position: sticky; top: 0; z-index: 100;
             background: rgba(0, 0, 0, 0.85); border-bottom: 1.5px solid var(--orange-glow);
             padding: 20px; text-align: center;
         }
-
         .boss-notes-trigger {
             position: absolute; top: 15px; left: 15px; z-index: 200;
             width: 60px; height: 60px; background: rgba(255, 255, 255, 0.1);
@@ -70,67 +55,56 @@
         }
         .boss-notes-trigger span { font-size: 10px; color: var(--gold); margin-top: -5px; font-weight: bold; }
         .msg-icon { font-size: 24px; color: #fff; }
-
         .options-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 20px; padding-top: 80px; }
-        .option-card { 
-            position: relative; height: 110px; border: 1px solid var(--orange-glow); 
+        .option-card {
+            position: relative; height: 110px; border: 1px solid var(--orange-glow);
             border-radius: 12px; overflow: hidden; display: flex; align-items: center; justify-content: center; cursor: pointer;
         }
-        /* بطاقة اختيار المسار - عريضة */
         .option-card-wide {
-            grid-column: span 2;
-            position: relative; height: 110px;
-            border: 2px solid var(--gold); border-radius: 12px;
+            grid-column: span 2; position: relative; height: 70px;
+            border: 1px solid var(--gold); border-radius: 50px;
             overflow: hidden; display: flex; align-items: center; justify-content: center; cursor: pointer;
-            background: linear-gradient(135deg, rgba(255,215,0,0.07), rgba(0,243,255,0.07));
-            box-shadow: 0 0 20px rgba(255,215,0,0.2);
+            background: rgba(0,0,0,0.5);
         }
         .card-img-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; filter: brightness(0.5); }
         .card-text      { position: relative; z-index: 2; color: var(--neon-blue); font-weight: bold; text-shadow: 0 0 8px #000; font-size: 13px; text-align: center; padding: 5px; }
-        .card-text-wide { position: relative; z-index: 2; color: var(--gold); font-weight: bold; font-size: 17px; text-align: center; letter-spacing: 1px; text-shadow: 0 0 14px rgba(255,215,0,0.7); }
-
+        .card-text-wide { position: relative; z-index: 2; color: var(--gold); font-weight: bold; font-size: 14px; text-align: center; }
         .p-btn { padding: 10px 20px; border-radius: 50px; cursor: pointer; font-weight: bold; font-family: 'Cairo'; margin-top: 10px; }
         .p-btn.confirm { background: var(--main-red); color: white; border: none; }
         .p-btn.cancel  { background: transparent; color: var(--gold); border: 1px solid var(--gold); }
-        
         .rules-trigger {
-            margin: 20px auto; padding: 15px; width: 70%; text-align: center;
+            margin: 10px auto; padding: 15px; width: 70%; text-align: center;
             border: 1px solid var(--gold); border-radius: 50px; color: var(--gold);
             font-weight: bold; cursor: pointer; background: rgba(0,0,0,0.5);
         }
 
         /* ===== BOSS NOTES ROOM ===== */
         #boss-notes-room { background: url('5000.jpg') center/cover no-repeat; z-index: 40000; flex-direction: column; }
-
-        /* شريط علوي */
         .boss-room-header {
             position: sticky; top: 0; z-index: 200;
-            background: rgba(0,0,0,0.93);
-            border-bottom: 2px solid var(--gold);
+            background: rgba(0,0,0,0.93); border-bottom: 2px solid var(--gold);
             display: flex; align-items: center; gap: 10px;
             padding: 10px 14px; flex-shrink: 0;
         }
-        .boss-header-back  { font-size: 28px; color: var(--main-red); cursor: pointer; line-height: 1; flex-shrink: 0; }
+        .boss-header-back   { font-size: 28px; color: var(--main-red); cursor: pointer; line-height: 1; flex-shrink: 0; }
+        /* صورة الشريط العلوي - منفردة بصيغة 1010.jpg */
         .boss-header-avatar {
             width: 44px; height: 44px; border-radius: 50%;
-            background: url('300500.jpg') center/cover no-repeat;
+            background: url('1010.jpg') center/cover no-repeat;
             border: 2px solid var(--gold); flex-shrink: 0;
         }
         .boss-header-info  { display: flex; flex-direction: column; align-items: flex-start; }
         .boss-header-name  { font-family: 'Creepster'; color: var(--gold); font-size: 17px; letter-spacing: 1px; line-height: 1.2; }
         .boss-header-status{ font-size: 10px; color: var(--neon-blue); }
-
-        /* منطقة المحادثة */
         .chat-container {
             flex: 1; padding: 15px 15px 20px; overflow-y: auto;
             display: flex; flex-direction: column; gap: 14px;
             width: 100%; box-sizing: border-box;
         }
-
-        .chat-bubble-wrapper        { display: flex; align-items: flex-end; gap: 8px; }
+        .chat-bubble-wrapper          { display: flex; align-items: flex-end; gap: 8px; }
         .chat-bubble-wrapper.received { flex-direction: row; }
         .chat-bubble-wrapper.sent     { flex-direction: row-reverse; }
-
+        /* صورة ملف شخصي المحادثة - 300500.jpg - منفردة عن صورة الشريط */
         .chat-avatar {
             width: 36px; height: 36px; border-radius: 50%;
             background: url('300500.jpg') center/cover no-repeat;
@@ -139,10 +113,8 @@
         .chat-bubble-content { max-width: 78%; display: flex; flex-direction: column; }
         .chat-bubble-wrapper.received .chat-bubble-content { align-items: flex-start; }
         .chat-bubble-wrapper.sent     .chat-bubble-content { align-items: flex-end; }
-
         .sender-name { font-size: 10px; color: #aaa; margin-bottom: 3px; }
         .msg-time    { font-size: 9px;  color: #555; margin-top: 3px; }
-
         .chat-bubble { padding: 11px 14px; font-size: 14px; line-height: 1.6; word-break: break-word; }
         .chat-bubble-wrapper.received .chat-bubble {
             background: linear-gradient(135deg,#1a1a2e,#16213e);
@@ -154,8 +126,26 @@
             border: 1px solid rgba(255,0,0,0.3);
             border-radius: 18px 18px 0 18px; text-align: right; color: #fff;
         }
-
+        /* صورة مرفقة في المحادثة بإطار منحني */
+        .chat-img-attachment {
+            width: 100%; max-width: 220px;
+            border-radius: 14px 14px 14px 4px;
+            border: 2px solid var(--gold);
+            display: block; margin-bottom: 6px;
+            box-shadow: 0 4px 15px rgba(255,215,0,0.2);
+        }
         .chat-footer { background: rgba(0,0,0,0.85); padding: 14px; text-align: center; font-size: 12px; color: var(--main-red); border-top: 1px solid #222; flex-shrink: 0; }
+
+        /* تفاعلات المحادثة */
+        .msg-reactions { display: flex; gap: 6px; margin-top: 4px; flex-wrap: wrap; }
+        .msg-react-btn {
+            background: rgba(255,255,255,0.08); border: 1px solid #333;
+            border-radius: 50px; padding: 3px 10px; cursor: pointer;
+            font-size: 12px; color: #ccc; display: flex; align-items: center; gap: 4px;
+            transition: all 0.2s;
+        }
+        .msg-react-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(255,215,0,0.1); }
+        .msg-react-count { font-size: 10px; }
 
         /* ===== SUB ROOM ===== */
         #sub-room { background-size: cover; background-position: center; display: none; }
@@ -167,13 +157,10 @@
         }
         .room-title        { font-family: 'Creepster'; color: var(--main-red); font-size: 26px; border-bottom: 1px solid var(--main-red); margin-bottom: 15px; text-align: center; }
         .room-text-content { color: #eee; font-size: 14px; line-height: 1.8; }
-
         .app-file-list { margin-top: 15px; text-align: center; }
         .app-item { background: rgba(255,255,255,0.1); margin: 5px 0; padding: 10px; border-radius: 8px; border: 1px dashed var(--neon-blue); cursor: pointer; color: var(--gold); font-size: 12px; }
-
         .back-arrow { position: fixed; top: 25px; right: 25px; color: var(--main-red); font-size: 35px; cursor: pointer; z-index: 10000; display: none; }
         .typewriter-text { display: inline; }
-
         @keyframes glitchEffect {
             0%   { transform: translate(0);       filter: hue-rotate(0deg);  opacity: 1; }
             20%  { transform: translate(-5px,5px); filter: hue-rotate(90deg); opacity: 0.8; }
@@ -183,10 +170,60 @@
             100% { transform: translate(0);       filter: hue-rotate(0deg);  opacity: 1; }
         }
         .glitch-active { animation: glitchEffect 0.2s infinite; }
+
+        /* ====== НОВЫЕ СТИЛИ ====== */
+        /* شاشات التخصص */
+        #path-screen { position: fixed; inset: 0; display: none; flex-direction: column; justify-content: center; align-items: center; background: rgba(0,0,0,0.97); z-index: 45000; }
+        .path-box { width: 85%; max-width: 360px; background: rgba(0,0,0,0.9); border: 1px solid var(--gold); border-radius: 16px; padding: 25px; text-align: center; }
+        .path-btn { display: block; width: 100%; margin: 10px 0; padding: 14px; border-radius: 50px; font-family: 'Cairo'; font-size: 15px; font-weight: bold; cursor: pointer; border: 1px solid var(--neon-blue); background: rgba(0,243,255,0.07); color: var(--neon-blue); }
+        .path-sub { font-size: 10px; color: #666; margin-top: 2px; font-family: 'Cairo'; }
+
+        #role-screen { position: fixed; inset: 0; display: none; flex-direction: column; justify-content: center; align-items: center; background: rgba(0,0,0,0.97); z-index: 46000; }
+        .role-box { width: 85%; max-width: 360px; background: rgba(0,0,0,0.9); border: 1px solid var(--main-red); border-radius: 16px; padding: 25px; text-align: center; }
+        .role-btn { display: block; width: 100%; margin: 10px 0; padding: 14px; border-radius: 50px; font-family: 'Cairo'; font-size: 15px; font-weight: bold; cursor: pointer; border: 1px solid var(--main-red); background: rgba(255,0,0,0.07); color: #fff; }
+        .role-sub { font-size: 10px; color: #888; margin-top: -6px; margin-bottom: 6px; font-family: 'Cairo'; }
+
+        #join-screen { position: fixed; inset: 0; display: none; flex-direction: column; justify-content: center; align-items: center; background: rgba(0,0,0,0.97); z-index: 47000; }
+        .join-box { width: 85%; max-width: 360px; background: rgba(0,0,0,0.9); border: 1px solid var(--gold); border-radius: 16px; padding: 25px; text-align: center; }
+        .phone-copy { font-size: 22px; color: var(--gold); font-family: 'Creepster'; letter-spacing: 2px; cursor: pointer; border: 1px dashed var(--gold); padding: 8px 20px; border-radius: 10px; display: inline-block; margin: 15px 0; }
+
+        /* أعضاء */
+        .member-row { display: flex; align-items: center; gap: 12px; padding: 10px 5px; border-bottom: 1px solid rgba(255,255,255,0.08); direction: rtl; }
+        .member-rank { width: 22px; text-align: center; font-weight: bold; font-size: 13px; flex-shrink: 0; }
+        .member-avatar { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 2px solid var(--gold); flex-shrink: 0; background: #222; }
+        .member-name { font-size: 12px; color: #eee; flex: 1; text-align: right; }
+        .member-role { font-size: 10px; color: #666; text-align: right; margin-top: 2px; }
+
+        /* بطاقة الاستخبارات */
+        .intel-card { background: rgba(0,0,0,0.85); border: 1px solid #333; border-radius: 14px; padding: 15px; margin-top: 10px; direction: rtl; }
+        .intel-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; direction: rtl; }
+        .intel-avatar { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 2px solid var(--main-red); flex-shrink: 0; }
+        .intel-sender { font-size: 12px; color: var(--gold); font-weight: bold; }
+        .intel-body { font-size: 13px; color: #ddd; line-height: 1.7; text-align: right; }
+        /* صورة مرفقة بإطار في بطاقة الاستخبارات */
+        .intel-img {
+            width: 100%; max-width: 260px; border-radius: 14px;
+            border: 2px solid #8B0000;
+            display: block; margin: 12px auto;
+            box-shadow: 0 4px 20px rgba(139,0,0,0.4);
+        }
+        .intel-reactions { display: flex; gap: 12px; margin-top: 10px; }
+        .react-btn { background: rgba(255,255,255,0.07); border: 1px solid #333; border-radius: 50px; padding: 5px 14px; cursor: pointer; font-size: 14px; color: #ccc; display: flex; align-items: center; gap: 5px; }
+        .react-btn.active { border-color: var(--gold); color: var(--gold); }
+        .react-count { font-size: 11px; }
+
+        /* قسم 2 */
+        .sec2-btn { margin: 8px auto 0; padding: 10px 20px; width: fit-content; text-align: center; border: 1px solid #555; border-radius: 8px; color: #555; font-weight: bold; cursor: pointer; background: #111; font-family: 'Cairo'; font-size: 14px; display: block; }
+
+        /* موافقة القوانين */
+        .agree-btn { margin: 15px auto 0; padding: 12px 30px; display: block; border: 1px solid var(--neon-blue); border-radius: 50px; color: var(--neon-blue); font-weight: bold; cursor: pointer; background: rgba(0,243,255,0.06); font-family: 'Cairo'; font-size: 13px; }
     </style>
 </head>
-<body onload="checkBanStatus(); document.getElementById('splash-screen').style.display='flex'">
+<body onload="checkBanStatus(); document.getElementById('splash-screen').style.display='flex'; initBgMusic();">
 
+    <audio id="bg-music" loop style="display:none;">
+        <source src="xxx3486" type="audio/mpeg">
+    </audio>
     <div class="back-arrow" id="backBtn" onclick="goBack()">➔</div>
 
     <!-- ===== BANNED ===== -->
@@ -223,14 +260,8 @@
         </div>
     </div>
 
-    <!-- ===== PATH MODAL - بدون رمز تحقق ===== -->
-    <div id="path-modal">
-        <div class="path-content">
-            <h3 style="color:var(--gold);font-family:'Creepster';font-size:22px;">اختيار المسار وتخصص</h3>
-            <div id="path-text" style="font-size:14px;color:#eee;margin:15px 0;line-height:1.8;text-align:center;"></div>
-            <button class="p-btn cancel" id="path-close-btn" style="display:none;" onclick="document.getElementById('path-modal').style.display='none'">إغلاق</button>
-        </div>
-    </div>
+    <!-- path-modal غير مستخدم الآن - path-screen هو المستخدم -->
+    <div id="path-modal" style="display:none;"><div class="path-content"></div></div>
 
     <!-- ===== ROOM PROMPT ===== -->
     <div id="custom-prompt">
@@ -244,16 +275,22 @@
         </div>
     </div>
 
-    <!-- ===== RULES ===== -->
+    <!-- ===== RULES - قوانين جديدة ===== -->
     <div id="rules-modal">
-        <div class="rules-content">
+        <div class="rules-content" style="max-height:80vh;overflow-y:auto;">
             <h3 style="color:var(--gold);">معايير وقوانين 53</h3>
+            <!-- صورة مرفقة في الملاحظة -->
+            <div style="margin: 12px auto; text-align:center;">
+                <img src="202011.jpg" style="width:100%;max-width:240px;border-radius:14px;border:2px solid var(--gold);display:block;margin:0 auto 8px;box-shadow:0 4px 15px rgba(255,215,0,0.2);" onerror="this.style.display='none'">
+                <div style="font-size:12px;color:#aaa;text-align:right;">يا شباب سيتم إضافة ميزات جديدة قريباً كونوا على أهبة الاستعداد.</div>
+            </div>
             <div id="rules-text" style="color:#eee;font-size:13px;text-align:right;margin:15px 0;line-height:1.8;"></div>
+            <button class="agree-btn" id="agree-rules-btn" style="display:none;" onclick="agreeRules()">✔ أوافق على القوانين</button>
             <button class="p-btn cancel" id="rules-btn" style="display:none;" onclick="document.getElementById('rules-modal').style.display='none'">إغلاق</button>
         </div>
     </div>
 
-    <!-- ===== SPLASH - poster="1212.jpg" ===== -->
+    <!-- ===== SPLASH ===== -->
     <div id="splash-screen">
         <video id="video-start" poster="1212.jpg" playsinline><source src="start.mp4" type="video/mp4"></video>
         <button class="btn-enter-ru" id="start-btn" onclick="runSystem()">ВХОД</button>
@@ -287,51 +324,71 @@
         <video class="bg-video" autoplay loop muted style="opacity:0.4;filter:brightness(0.4);"><source src="options_bg.mp4" type="video/mp4"></video>
         <div class="boss-notes-trigger" onclick="openBossNotes()">
             <div class="msg-icon">💬</div>
-            <span>ملاحظة</span>
+            <span>cat 53</span>
         </div>
         <div class="dashboard-scroll" id="dashScroll">
             <div id="note-board"><div style="color:var(--gold);font-size:14px;">نظام область 53 نشط الآن.</div></div>
             <div class="options-grid" id="grid"></div>
             <div class="rules-trigger" onclick="showRules()">معايير وقوانين 53</div>
+            <center><div class="sec2-btn" onclick="showSec2()">◼ قسم 2</div></center>
+            <div style="height:30px;"></div>
         </div>
     </div>
 
-    <!-- ===== BOSS NOTES ROOM - شريط علوي + محادثات منظمة ===== -->
+    <!-- ===== BOSS NOTES ROOM - cat 53 ===== -->
     <div id="boss-notes-room">
-
-        <!-- شريط علوي -->
+        <!-- شريط علوي - صورة 1010.jpg منفردة -->
         <div class="boss-room-header">
             <div class="boss-header-back" onclick="closeBossNotes()">➔</div>
-            <div class="boss-header-avatar"></div>
+            <div class="boss-header-avatar"></div><!-- url('1010.jpg') في CSS -->
             <div class="boss-header-info">
                 <div class="boss-header-name">область 𝟓𝟑 &nbsp;›1‹</div>
                 <div class="boss-header-status">● نشط الآن</div>
             </div>
         </div>
-
-        <!-- محادثات منظمة -->
         <div class="chat-container" id="chat-box">
-
-            <!-- رسالة 1 -->
+            <!-- رسالة 1 - صورة ملف شخصي 300500.jpg -->
             <div class="chat-bubble-wrapper received">
-                <div class="chat-avatar"></div>
+                <div class="chat-avatar"></div><!-- url('300500.jpg') في CSS -->
                 <div class="chat-bubble-content">
                     <div class="sender-name">X【図】 LITHく交ᵎ襲</div>
                     <div id="boss-chat-text" class="chat-bubble"></div>
+                    <div class="msg-reactions">
+                        <button class="msg-react-btn" id="r1-like" onclick="reactMsg('r1','like')">👍 <span class="msg-react-count" id="r1-like-c">0</span></button>
+                        <button class="msg-react-btn" id="r1-heart" onclick="reactMsg('r1','heart')">❤️ <span class="msg-react-count" id="r1-heart-c">0</span></button>
+                    </div>
                     <div class="msg-time">12:00</div>
                 </div>
             </div>
-
             <!-- رسالة 2 -->
             <div class="chat-bubble-wrapper received">
                 <div class="chat-avatar"></div>
                 <div class="chat-bubble-content">
                     <div class="sender-name">X【図】 LITHく交ᵎ襲</div>
                     <div id="boss-chat-text-2" class="chat-bubble"></div>
+                    <div class="msg-reactions">
+                        <button class="msg-react-btn" id="r2-like" onclick="reactMsg('r2','like')">👍 <span class="msg-react-count" id="r2-like-c">0</span></button>
+                        <button class="msg-react-btn" id="r2-heart" onclick="reactMsg('r2','heart')">❤️ <span class="msg-react-count" id="r2-heart-c">0</span></button>
+                    </div>
                     <div class="msg-time">12:05</div>
                 </div>
             </div>
-
+            <!-- رسالة 3 - صورة مرفقة 4238.jpg بإطار منحني -->
+            <div class="chat-bubble-wrapper received">
+                <div class="chat-avatar"></div>
+                <div class="chat-bubble-content">
+                    <div class="sender-name">X【図】 LITHく交ᵎ襲</div>
+                    <div class="chat-bubble" style="padding:8px 10px;">
+                        <img src="4238.jpg" class="chat-img-attachment" alt="صورة مرفقة" onerror="this.style.display='none'">
+                        <div style="font-size:13px;color:#ddd;text-align:right;margin-top:6px;">يا شباب نحن الآن في أول انطلاق لمنظمتنا وتجمع المنطقة 53، الرأي من كل الأعضاء: الاتجاه نحو فيسبوك.</div>
+                    </div>
+                    <div class="msg-reactions">
+                        <button class="msg-react-btn" id="r3-like" onclick="reactMsg('r3','like')">👍 <span class="msg-react-count" id="r3-like-c">0</span></button>
+                        <button class="msg-react-btn" id="r3-heart" onclick="reactMsg('r3','heart')">❤️ <span class="msg-react-count" id="r3-heart-c">0</span></button>
+                    </div>
+                    <div class="msg-time">12:10</div>
+                </div>
+            </div>
         </div>
         <div class="chat-footer">المشرفون فقط من يمكنهم التحدث هنا</div>
     </div>
@@ -342,23 +399,54 @@
         <div class="room-data-box">
             <div class="room-title" id="room-display-title">ROOM ID</div>
             <div class="room-text-content" id="room-display-text"></div>
-            <!-- ===== ملفات ssh1.apk → ssh10.apk في الغرفة 1 (Auto Бот) ===== -->
+            <div id="room-extra-content"></div>
+            <!-- ملفات ssh - الغرفة 1 فقط -->
             <div id="app-content-area" class="app-file-list" style="display:none;">
-                <div class="app-item">📦 ssh1.apk &nbsp;[تحميل]</div>
-                <div class="app-item">📦 ssh2.apk &nbsp;[تحميل]</div>
-                <div class="app-item">📦 ssh3.apk &nbsp;[تحميل]</div>
-                <div class="app-item">📦 ssh4.apk &nbsp;[تحميل]</div>
-                <div class="app-item">📦 ssh5.apk &nbsp;[تحميل]</div>
-                <div class="app-item">📦 ssh6.apk &nbsp;[تحميل]</div>
-                <div class="app-item">📦 ssh7.apk &nbsp;[تحميل]</div>
-                <div class="app-item">📦 ssh8.apk &nbsp;[تحميل]</div>
-                <div class="app-item">📦 ssh9.apk &nbsp;[تحميل]</div>
-                <div class="app-item">📦 ssh10.apk [تحميل]</div>
+                <div class="app-item" onclick="downloadAPK('ssh1.apk')">📦 ssh1.apk &nbsp;[تحميل]</div>
+                <div class="app-item" onclick="downloadAPK('ssh2.apk')">📦 ssh2.apk &nbsp;[تحميل]</div>
+                <div class="app-item" onclick="downloadAPK('ssh3.apk')">📦 ssh3.apk &nbsp;[تحميل]</div>
+                <div class="app-item" onclick="downloadAPK('ssh4.apk')">📦 ssh4.apk &nbsp;[تحميل]</div>
+                <div class="app-item" onclick="downloadAPK('ssh5.apk')">📦 ssh5.apk &nbsp;[تحميل]</div>
+                <div class="app-item" onclick="downloadAPK('ssh6.apk')">📦 ssh6.apk &nbsp;[تحميل]</div>
+                <div class="app-item" onclick="downloadAPK('ssh7.apk')">📦 ssh7.apk &nbsp;[تحميل]</div>
+                <div class="app-item" onclick="downloadAPK('ssh8.apk')">📦 ssh8.apk &nbsp;[تحميل]</div>
+                <div class="app-item" onclick="downloadAPK('ssh9.apk')">📦 ssh9.apk &nbsp;[تحميل]</div>
+                <div class="app-item" onclick="downloadAPK('ssh10.apk')">📦 ssh10.apk [تحميل]</div>
                 <div style="color:#666;font-size:10px;margin-top:10px;">بانتظار مزامنة بقية الملفات (10/100)...</div>
             </div>
         </div>
     </div>
 
+    <!-- ===== شاشة اختيار المسار ===== -->
+    <div id="path-screen">
+        <div onclick="document.getElementById('path-screen').style.display='none'" style="position:absolute;top:25px;left:25px;font-size:35px;color:var(--main-red);cursor:pointer;">➔</div>
+        <div class="path-box">
+            <h2 style="color:var(--gold);font-family:'Creepster';">اختيار المسار</h2>
+            <p style="color:#aaa;font-size:13px;margin-bottom:15px;">اختر تخصصك في المنظمة</p>
+            <button class="path-btn" onclick="goRole('محارب')">⚔ محارب</button>
+            <div class="path-sub">لفئة معينة</div>
+            <button class="path-btn" onclick="goAgent()">🕵 عميل</button>
+            <div class="path-sub">متاح للجميع</div>
+            <button class="path-btn" onclick="goSoldier()">🪖 جندي</button>
+            <div class="path-sub">للجميع</div>
+        </div>
+    </div>
+
+    <!-- ===== شاشة الانضمام (عميل/جندي/محارب) ===== -->
+    <div id="join-screen">
+        <div onclick="document.getElementById('join-screen').style.display='none'" style="position:absolute;top:25px;left:25px;font-size:35px;color:var(--main-red);cursor:pointer;">➔</div>
+        <div class="join-box">
+            <h2 style="color:var(--gold);font-family:'Creepster';" id="join-title">الانضمام</h2>
+            <p style="color:#aaa;font-size:13px;" id="join-sub"></p>
+            <div id="join-phone-block" style="display:none;">
+                <div class="phone-copy" id="phone-num" onclick="copyPhone()">+218930342455</div>
+                <p style="color:#666;font-size:10px;">اضغط للنسخ</p>
+            </div>
+            <div style="margin-top:10px;" id="join-btns"></div>
+        </div>
+    </div>
+
+    <!-- ===== السكربت الأصلي كما هو بدون أي تعديل ===== -->
     <script>
         const vStart    = document.getElementById('video-start');
         const vMain     = document.getElementById('video-main');
@@ -386,22 +474,13 @@
             "vc gi kj c vb nd do ofc","bcd bc hb nh if","jg djgn","vhffg","vgjhf"
         ];
 
-        // ===== أسماء الغرف =====
         const roomNames = [
-            "Auto Бот",                      // 0
-            "غرفة الكودات",                  // 1
-            "غرفة من الأقوى",                // 2
-            "آخر عمليات تم القيام بها",      // 3
-            "انجازات المنطقة 53",            // 4
-            "أعضاء المنطقة 53",              // 5
-            "آخر ما تم برمجته",              // 6
-            "آخر الأخبار",                   // 7
-            "المهام الموكلة",                // 8
-            "غرفة الاستخبارات",              // 9
+            "Auto Бот","غرفة الكودات","غرفة من الأقوى","آخر عمليات تم القيام بها","انجازات المنطقة 53",
+            "أعضاء المنطقة 53","آخر ما تم برمجته","آخر الأخبار","المهام الموكلة","غرفة الاستخبارات",
             "غرفة رقم 11","غرفة رقم 12","غرفة رقم 13","غرفة رقم 14","غرفة رقم 15",
             "غرفة رقم 16","غرفة رقم 17","غرفة رقم 18","غرفة رقم 19","غرفة رقم 20",
             "غرفة رقم 21","غرفة رقم 22","غرفة رقم 23","غرفة رقم 24","غرفة رقم 25",
-            "غرفة رقم 26","غرفة رقم 27","غرفة رقم 28","غرفة رقم 29"
+            "غرفة رقم 26","غرفة رقم 27","غرفة السيكو","قسم الأعضاء والجدولة"
         ];
 
         const tickAudio = new Audio('https://www.soundjay.com/buttons/beep-29.mp3');
@@ -475,7 +554,6 @@
             else if (attempts === 2) waitTime = 60;
             else if (attempts === 3) waitTime = 3600;
             else { localStorage.setItem('53_permaban', 'true'); checkBanStatus(); return; }
-
             document.getElementById('error-modal').style.display = 'block';
             typeWriter('error-text', "كلمة السر خطأ الرجاء محاولة في وقت آخر", 50);
             let remaining = waitTime;
@@ -496,9 +574,28 @@
 
         function showRules() {
             document.getElementById('rules-modal').style.display = 'block';
-            typeWriter('rules-text', "* الالتزام بالخصوصية التامة.\n* يمنع تسريب رموز الغرف.\n* النظام يراقب كافة التحركات.", 40, () => {
+            document.getElementById('agree-rules-btn').style.display = 'none';
+            document.getElementById('rules-btn').style.display = 'none';
+            const rulesText =
+                "① عدم شتم الأعضاء والمسؤولين تحت أي ظرف إلا لو تم ظلمك لديك حرية تصرف.\n\n" +
+                "② احترام الأعضاء.\n\n" +
+                "③ لديك حرية انضمام للعصابات بشروط تجدها في جروبنا الأساسي.\n\n" +
+                "④ ممنوع تتعامل مع منظمات معادية إلا بهدف مفيد للجميع، هدف غير مقنع يتم اعتبارك خائن ويرموك بالقمامة.\n\n" +
+                "⑤ هل توافق على القوانين؟ لو نعم يتم إزالة الملاحظة، لو لا يتم طرد من الموقع.";
+            typeWriter('rules-text', rulesText, 20, () => {
+                document.getElementById('agree-rules-btn').style.display = 'block';
                 document.getElementById('rules-btn').style.display = 'inline-block';
             });
+        }
+
+        function agreeRules() {
+            localStorage.setItem('53_rules_agreed', 'true');
+            document.getElementById('agree-rules-btn').innerText = '✔ تمت الموافقة';
+            document.getElementById('agree-rules-btn').style.color = 'var(--gold)';
+            document.getElementById('agree-rules-btn').style.borderColor = 'var(--gold)';
+            document.getElementById('agree-rules-btn').disabled = true;
+            // إخفاء الملاحظة من note-board لو وافق
+            document.getElementById('note-board').style.display = 'none';
         }
 
         function switchPage(oldId, newId) {
@@ -510,13 +607,12 @@
         function closeWelcome() {
             switchPage('welcome-notif', 'main-dashboard');
             generateOptions();
+            playBgMusic();
         }
 
         function generateOptions() {
             const grid = document.getElementById('grid');
             grid.innerHTML = "";
-
-            // 29 غرفة عادية
             for (let i = 0; i < roomKeys.length; i++) {
                 const btn = document.createElement('div');
                 btn.className = 'option-card';
@@ -524,21 +620,12 @@
                 btn.onclick = () => showPrompt(i);
                 grid.appendChild(btn);
             }
-
-            // ===== الخيار 30 - اختيار المسار (عريض - بدون رمز) =====
+            // زر اختيار المسار - بحجم ونمط مثل زر القوانين
             const wide = document.createElement('div');
             wide.className = 'option-card-wide';
-            wide.innerHTML = `<div class="card-text-wide">⚡ اختيار المسار وتخصص ⚡</div>`;
-            wide.onclick = openPathModal;
+            wide.innerHTML = `<div class="card-text-wide">اختيار المسار وتخصص</div>`;
+            wide.onclick = () => { document.getElementById('path-screen').style.display = 'flex'; };
             grid.appendChild(wide);
-        }
-
-        function openPathModal() {
-            document.getElementById('path-modal').style.display = 'block';
-            document.getElementById('path-close-btn').style.display = 'none';
-            typeWriter('path-text', "لا يوجد أي دلائل منشورة الآن.", 50, () => {
-                document.getElementById('path-close-btn').style.display = 'inline-block';
-            });
         }
 
         function validateRoomKey() {
@@ -548,18 +635,25 @@
                 roomPage.style.backgroundImage = `url('${selectedRoomIndex + 31}.jpg')`;
                 const title = (selectedRoomIndex === 0) ? "Auto Бот - Files" : roomNames[selectedRoomIndex].toUpperCase();
                 document.getElementById('room-display-title').innerText = title;
+                document.getElementById('room-extra-content').innerHTML = '';
                 switchPage('main-dashboard', 'sub-room');
                 const extraText = (selectedRoomIndex === 0) ? "\n* جميع تطبيقاتنا بين يديك احترس ولا تشاركها لأحد." : "";
                 typeWriter('room-display-text',
                     `* تم فك التشفير بنجاح.\n* العضو المسؤول: نظام область 53.\n* التاريخ: ${new Date().toLocaleDateString('ar-EG')}${extraText}`,
                     30,
-                    () => { if (selectedRoomIndex === 0) document.getElementById('app-content-area').style.display = 'block'; }
+                    () => {
+                        if (selectedRoomIndex === 0) document.getElementById('app-content-area').style.display = 'block';
+                        else document.getElementById('app-content-area').style.display = 'none';
+                        renderRoomExtra(selectedRoomIndex);
+                    }
                 );
             } else { handleLoginError(); }
         }
 
         function openBossNotes() {
             switchPage('main-dashboard', 'boss-notes-room');
+            playBgMusic();
+            loadReactions();
             typeWriter('boss-chat-text',
                 "مرحباً بكم جميعاً في موقع منظمة المنطقة 53، أتمنى عدم مشاركة الرموز وانتظار كل تحديث، سيتم إعلامكم عن كل جديد.",
                 40,
@@ -579,6 +673,7 @@
         function closeBossNotes() { switchPage('boss-notes-room', 'main-dashboard'); }
         function exitRoom() {
             document.getElementById('app-content-area').style.display = 'none';
+            document.getElementById('room-extra-content').innerHTML = '';
             switchPage('sub-room', 'main-dashboard');
         }
         function goBack() { location.reload(); }
@@ -589,5 +684,179 @@
             digitLoad.innerText = percentage + "%";
         };
     </script>
+
+    <!-- ===== سكربت الميزات الجديدة - منفصل تماماً ===== -->
+    <script>
+
+        function initBgMusic() { document.getElementById('bg-music').volume = 0.35; }
+        function playBgMusic() { document.getElementById('bg-music').play().catch(()=>{}); }
+
+        function downloadAPK(filename) {
+            const a = document.createElement('a');
+            a.href = filename; a.download = filename;
+            document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        }
+
+        function showSec2() { alert("ليس متوفراً حالياً."); }
+
+        /* ---- تفاعلات رسائل cat 53 ---- */
+        function loadReactions() {
+            ['r1','r2','r3'].forEach(id => {
+                ['like','heart'].forEach(type => {
+                    const key = `53_msg_${id}_${type}`;
+                    const d = JSON.parse(localStorage.getItem(key) || '{"count":0,"mine":false}');
+                    const btn = document.getElementById(`${id}-${type}`);
+                    const cnt = document.getElementById(`${id}-${type}-c`);
+                    if (btn && cnt) {
+                        cnt.innerText = d.count;
+                        btn.className = 'msg-react-btn' + (d.mine ? ' active' : '');
+                    }
+                });
+            });
+        }
+
+        function reactMsg(id, type) {
+            const key = `53_msg_${id}_${type}`;
+            let d = JSON.parse(localStorage.getItem(key) || '{"count":0,"mine":false}');
+            if (d.mine) { d.count = Math.max(0, d.count - 1); d.mine = false; }
+            else        { d.count++; d.mine = true; }
+            localStorage.setItem(key, JSON.stringify(d));
+            const btn = document.getElementById(`${id}-${type}`);
+            const cnt = document.getElementById(`${id}-${type}-c`);
+            cnt.innerText = d.count;
+            btn.className = 'msg-react-btn' + (d.mine ? ' active' : '');
+        }
+
+        /* ---- محتوى الغرف ---- */
+        function renderRoomExtra(idx) {
+            const el = document.getElementById('room-extra-content');
+            el.innerHTML = '';
+
+            // غرفة الكودات - idx 1
+            if (idx === 1) {
+                el.innerHTML = `<div style="color:#eee;font-size:14px;line-height:1.9;margin-top:15px;text-align:right;direction:rtl;">
+                    سيتم إضافة تحديثات بناءً على الأسبوع القادم مع أول تحديث. وشكراً.
+                </div>`;
+            }
+
+            // غرفة الاستخبارات - idx 9
+            if (idx === 9) {
+                const lk = JSON.parse(localStorage.getItem('53_intel_like')  || '{"count":0,"mine":false}');
+                const hk = JSON.parse(localStorage.getItem('53_intel_heart') || '{"count":0,"mine":false}');
+                el.innerHTML = `
+                <div class="intel-card">
+                    <div class="intel-header">
+                        <img src="123456789.jpg" class="intel-avatar" alt="" onerror="this.style.display='none'">
+                        <div>
+                            <div class="intel-sender">الاستخبارات السوفييتية — لواء 53</div>
+                            <div style="font-size:10px;color:#666;">رسالة مشفرة</div>
+                        </div>
+                    </div>
+                    <div class="intel-body">
+                        أهلاً بكم...<br><br>
+                        Я думаю, что постарела и мне уже 50, но я всё ещё работаю с надеждой, даже несмотря на то, что приближаюсь к смерти. Я хочу высказаться и поделиться последними своими открытиями.<br><br>
+                        في الفترة من 2024 إلى 2026 تضاعفت أعداد التكتلات السرية. مشروع الطوكيوهات أو العصابات كورنوس وأكثر من ذلك.<br><br>
+                        Я обнаружил передвижения очень тяжелой техники, почти как армия или организация, готовящаяся к войне. Предупреждаю всех игроков и врагов об опасности.<br><br>
+                        الحلف السوفييتي والمنطقة 53 لن تتحمل كل هذا الضرر. كونوا مستعدين، ستفتح الخط في 5 مايو 2026 والعالم سيشهد ما لم يره من قبل.<br><br>
+                        <strong style="color:var(--gold);">وداعاً</strong>
+                    </div>
+                    <img src="123456789.jpg" class="intel-img" alt="" onerror="this.style.display='none'">
+                    <div class="intel-reactions">
+                        <button class="react-btn ${lk.mine?'active':''}" id="btn-like" onclick="reactIntel('like')">
+                            👍 <span class="react-count" id="cnt-like">${lk.count}</span>
+                        </button>
+                        <button class="react-btn ${hk.mine?'active':''}" id="btn-heart" onclick="reactIntel('heart')">
+                            ❤️ <span class="react-count" id="cnt-heart">${hk.count}</span>
+                        </button>
+                    </div>
+                </div>`;
+            }
+
+            // قسم الأعضاء - idx 28
+            if (idx === 28) {
+                const members = [
+                    { name:"X【図】 LITHく交ᵎ襲",                                                      role:"مسؤول خطير",   rankColor:"#000",    rankBg:"#ffd700", img:"202012.jpg" },
+                    { name:"أݪأٔشــــــــــۖهِِــــــــــب ﹿٰٰٰٖٖٖٜ۬ﹿٰٰٖٖٜ۬ﹿٰٖٜ۬ﹿﮩ٭ ﭕ٭ﭕ",  role:"عضو استخبارات",rankColor:"#ffd700", rankBg:"transparent",img:"202013.jpg"},
+                    { name:"Ṯḧḕ Ḕṇḋ",                                                                  role:"مقفل",          rankColor:"#8B4513", rankBg:"transparent",img:"202014.jpg"},
+                    { name:"يِورَ يِڪِْأآ",                                                             role:"مقفل",          rankColor:"#fff",    rankBg:"transparent",img:"202015.jpg"},
+                    { name:"Park Rosanne",                                                               role:"مقفل",          rankColor:"#fff",    rankBg:"transparent",img:"202016.jpg"},
+                    { name:"",role:"مقفل",rankColor:"#fff",rankBg:"transparent",img:"202017.jpg"},
+                    { name:"",role:"مقفل",rankColor:"#fff",rankBg:"transparent",img:"202018.jpg"},
+                    { name:"",role:"مقفل",rankColor:"#fff",rankBg:"transparent",img:"202019.jpg"},
+                    { name:"",role:"مقفل",rankColor:"#fff",rankBg:"transparent",img:"202020.jpg"},
+                    { name:"",role:"مقفل",rankColor:"#fff",rankBg:"transparent",img:"202021.jpg"},
+                    { name:"",role:"مقفل",rankColor:"#fff",rankBg:"transparent",img:"202022.jpg"},
+                    { name:"",role:"مقفل",rankColor:"#fff",rankBg:"transparent",img:"202023.jpg"},
+                    { name:"",role:"مقفل",rankColor:"#fff",rankBg:"transparent",img:"202024.jpg"},
+                    { name:"",role:"مقفل",rankColor:"#fff",rankBg:"transparent",img:"202025.jpg"},
+                    { name:"",role:"مقفل",rankColor:"#fff",rankBg:"transparent",img:"202026.jpg"},
+                    { name:"",role:"مقفل",rankColor:"#fff",rankBg:"transparent",img:"202027.jpg"},
+                    { name:"",role:"مقفل",rankColor:"#fff",rankBg:"transparent",img:"202028.jpg"},
+                    { name:"",role:"مقفل",rankColor:"#fff",rankBg:"transparent",img:"202029.jpg"},
+                    { name:"",role:"مقفل",rankColor:"#fff",rankBg:"transparent",img:"202030.jpg"},
+                ];
+                let html = '<div style="margin-top:15px;">';
+                members.forEach((m, i) => {
+                    html += `<div class="member-row">
+                        <div class="member-rank" style="color:${m.rankColor};background:${m.rankBg};border-radius:4px;padding:2px 5px;min-width:22px;text-align:center;">${i+1}</div>
+                        <img src="${m.img}" class="member-avatar" alt="" onerror="this.src='';this.style.background='#222'">
+                        <div style="flex:1;text-align:right;">
+                            <div class="member-name">${m.name || '<span style="color:#333;">— خانة فارغة —</span>'}</div>
+                            <div class="member-role">${m.role}</div>
+                        </div>
+                    </div>`;
+                });
+                html += '</div>';
+                el.innerHTML = html;
+            }
+        }
+
+        /* ---- تفاعلات الاستخبارات ---- */
+        function reactIntel(type) {
+            const key = type === 'like' ? '53_intel_like' : '53_intel_heart';
+            let d = JSON.parse(localStorage.getItem(key) || '{"count":0,"mine":false}');
+            if (d.mine) { d.count = Math.max(0, d.count-1); d.mine = false; }
+            else        { d.count++; d.mine = true; }
+            localStorage.setItem(key, JSON.stringify(d));
+            if (type === 'like') {
+                document.getElementById('cnt-like').innerText = d.count;
+                document.getElementById('btn-like').className = 'react-btn' + (d.mine?' active':'');
+            } else {
+                document.getElementById('cnt-heart').innerText = d.count;
+                document.getElementById('btn-heart').className = 'react-btn' + (d.mine?' active':'');
+            }
+        }
+
+        /* ---- مسارات التخصص ---- */
+        // عميل - ينقل مباشرة لواتساب
+        function goAgent() {
+            window.location.href = 'https://chat.whatsapp.com/FaTflrmkOaSKqe4d8t2HGm?mode=gi_t';
+        }
+
+        // جندي - ينقل لقناة واتساب
+        function goSoldier() {
+            window.location.href = 'https://whatsapp.com/channel/0029VbCjAhaL7UVcgyvId70M';
+        }
+
+        // محارب - يعرض شاشة الانضمام مع رقم الهاتف
+        function goRole(role) {
+            document.getElementById('path-screen').style.display = 'none';
+            document.getElementById('join-title').innerText = `الانضمام كـ${role}`;
+            document.getElementById('join-sub').innerText = 'إذا كنت مستعداً اتصل عبر واتساب:';
+            document.getElementById('join-phone-block').style.display = 'block';
+            document.getElementById('join-btns').innerHTML = `<button class="p-btn cancel" onclick="document.getElementById('join-screen').style.display='none'">رجوع</button>`;
+            document.getElementById('join-screen').style.display = 'flex';
+        }
+
+        function copyPhone() {
+            navigator.clipboard.writeText('+218930342455').then(() => {
+                const el = document.getElementById('phone-num');
+                const orig = el.innerText;
+                el.innerText = '✔ تم النسخ';
+                setTimeout(() => { el.innerText = orig; }, 1500);
+            }).catch(() => {});
+        }
+
+    </script>
 </body>
-</html>
+    </html>
